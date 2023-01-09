@@ -1,0 +1,13 @@
+# Dependency directory
+node_modules
+# dist directory
+dist
+# Intellij Idea files
+.idea
+# VS Code
+.vscode
+# Local environment
+.env
+# Tmp
+.git
+.eslintrc.js
