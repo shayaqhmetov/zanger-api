@@ -1,4 +1,4 @@
-import moment from "moment-timezone";
+import moment from "moment";
 import { scheduleJob } from "node-schedule";
 import notificationService from "./notification.service";
 
@@ -19,7 +19,7 @@ class JobService {
   protected async initJobs() {
     const notifications = await notificationService.getNotifications();
     notifications.forEach(notification => {
-      const scheduleDate = moment(notification.time).tz("Asia/Almaty");
+      const scheduleDate = moment(notification.time);
       if (scheduleDate.isBefore(moment())){
         notificationService.sendNotification(notification._id);
       } else {

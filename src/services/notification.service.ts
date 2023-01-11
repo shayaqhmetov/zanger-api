@@ -28,7 +28,7 @@ class NotificationService {
   }
 
   public async createNotification(time: Date, message: string) {
-    const notification = await NotificationModel.create({ time, message });
+    const notification = await NotificationModel.create({ time: moment(time), message });
     console.log(`${moment().toDate()} | notification created ${notification.time}`);
     scheduleJob(notification.time, () => this.sendNotification(notification.id));
   }
