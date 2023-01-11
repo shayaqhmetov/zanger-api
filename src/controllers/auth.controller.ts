@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
+import AppError from "../extra/appError";
 
 import authService from "../services/user.service";
 import { generateAccessToken, generateRefreshToken, verifyRefresh } from "../utils/crypto";
@@ -21,9 +22,7 @@ class AuthController {
     const { refreshToken, role, userId } = req.body;
     const isValid = verifyRefresh(userId, refreshToken);
     if (!isValid) {
-      return res
-        .status(401)
-        .json({ success: false, error: "Invalid token, try login again" });
+      throw new AppError(401, "Invalid token, try login again");
     }
     const accessToken = generateAccessToken({ userId, role });
     return res.status(200).json({ success: true, accessToken });
@@ -32,7 +31,7 @@ class AuthController {
   public async login(req: Request, res: Response) {
     const user = await authService.getUserByPhone(req.body.phone);
     if (!user) {
-      return res.status(404).send("User does not exist!");
+      throw new AppError(404, "User does not exist!");
     }
     //if user does not exist, send a 400 response
     const password = user.password;
@@ -41,7 +40,7 @@ class AuthController {
       const refreshToken = generateRefreshToken({ userId: user._id, role: user.role });
       return res.json({ accessToken: accessToken, refreshToken: refreshToken });
     }
-    return res.status(401).send("Password Incorrect!");
+    throw new AppError(401, "Password Incorrect!");
   }
 }
 

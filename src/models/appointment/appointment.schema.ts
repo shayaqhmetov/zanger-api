@@ -13,19 +13,14 @@ const AppointmentSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  client: {
-    type:
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "user",
-    },
+  client:
+  {
+    type: mongoose.Types.ObjectId,
+    ref: "user",
   },
   partner: {
-    type:
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "user",
-    },
+    type: mongoose.Types.ObjectId,
+    ref: "user",
   },
 });
 

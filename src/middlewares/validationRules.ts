@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import moment from "moment";
 
 export const loginValidation = [
   body("phone").isMobilePhone("kk-KZ"),
@@ -14,8 +15,9 @@ export const appointmentValidation = [
   body("title").notEmpty().isString(),
   body("visitDate")
     .notEmpty()
-    .isDate()
-    .withMessage("next format YYYY/MM/DD"),
-  body("client").notEmpty().isString(),
-  body("partner").notEmpty().isString(),
+    .custom((value) => {
+      return moment(value, "YYYY-MM-DD HH:mm", true).isValid();
+    })
+    .withMessage("next format YYYY-MM-DD hh:mm"),
+  body("partner").notEmpty().isString().isLength({ min: 12, max: 32 }),
 ];
