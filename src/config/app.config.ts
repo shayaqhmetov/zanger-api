@@ -1,4 +1,4 @@
-import { NO_SECRET } from "../contants/errors";
+import { NO_SECRET } from "../constants/errors";
 
 export const getAccessKey = () => {
   const secret = process.env.ACCESS_TOKEN_SECRET;

@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 import { Roles } from "./users.types";
 
@@ -32,6 +32,14 @@ const UserSchema = new Schema({
   created: {
     type: Date,
     default: Date.now,
+  },
+  branches: {
+    type: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "branch",
+      },
+    ],
   },
 });
 

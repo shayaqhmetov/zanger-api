@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 import config from "../config/db.config";
 
-export default class Database {
+class Database {
   private static instance: Database;
   private isConnected: boolean = false;
   private constructor() { }
@@ -49,3 +49,5 @@ export default class Database {
     });
   }
 }
+
+export default Database.getInstance();
