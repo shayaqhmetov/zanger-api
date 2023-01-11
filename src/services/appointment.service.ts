@@ -42,16 +42,19 @@ class AppointmentService {
       }
       // if visit date is before old appnt date
       if (moment(visitDate).tz("Asia/Almaty").isBefore(previousVisitDate)) {
-        return false;
-      }
-      // if visit date is before old appnt date + 40m
-      if (moment(visitDate).tz("Asia/Almaty").isBefore(previousVisitFinishDate)) {
+        if (moment(visitDate).tz("Asia/Almaty").add(40, "m").isAfter(previousVisitDate)) {
+          return true;
+        }
         return false;
       }
 
-      if (moment(visitDate).tz("Asia/Almaty").isAfter(previousVisitFinishDate)) {
-        return false;
+      if (moment(visitDate).tz("Asia/Almaty").isAfter(previousVisitDate)) {
+        if (moment(visitDate).tz("Asia/Almaty").add(40, "m").isAfter(previousVisitFinishDate)) {
+          return false;
+        }
+        return true;
       }
+
       return true;
     });
 
